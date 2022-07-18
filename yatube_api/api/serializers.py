@@ -8,7 +8,7 @@ class PostSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(required=False)
 
     class Meta:
-        fields = ('id', 'author', 'text', 'pub_date', 'image', 'group')
+        fields = ('__all__')
         model = Post
 
 
@@ -18,7 +18,7 @@ class CommentSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        fields = ('id', 'author', 'text', 'created', 'post')
+        fields = ('__all__')
         model = Comment
 
 

@@ -4,6 +4,8 @@ from api.serializers import (CommentSerializer, FollowSerializer,
 from posts.models import Comment, Follow, Group, Post, User
 from rest_framework import filters, viewsets
 from rest_framework.exceptions import ValidationError
+from rest_framework.mixins import (CreateModelMixin, ListModelMixin,
+                                   RetrieveModelMixin)
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
 
@@ -25,7 +27,6 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [IsOwnerorReadOnly, ]
 
@@ -43,8 +44,10 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserSerializer
 
 
-class FollowViewSet(viewsets.ModelViewSet):
-    queryset = Follow.objects.all()
+class FollowViewSet(RetrieveModelMixin,
+                    ListModelMixin,
+                    CreateModelMixin,
+                    viewsets.GenericViewSet):
     serializer_class = FollowSerializer
     permission_classes = [IsOwnerorReadOnly, IsAuthenticated]
     filter_backends = [filters.SearchFilter]
