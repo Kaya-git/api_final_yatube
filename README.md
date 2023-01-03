@@ -53,8 +53,6 @@ py manage.py migrate
 ```
 py manage.py runserver
 ```
-api final
-```
 
 ## Примеры
 
